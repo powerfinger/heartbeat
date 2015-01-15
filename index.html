@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark's Analytics Video Heartbeat Demo</title>
+    <script src="script/VisitorAPI.js"></script>
+    <script src="script/VideoHeartbeat.min.js"></script>
+    <script src="script/AdobeAnalyticsPlugin.min.js"></script>
+    <script src="script/AppMeasurement.js"></script>
+</head>
+<body>
+
+<script language="JavaScript" type="text/javascript">
+s.pageName="Analytics Video Heartbeat Demo";
+s.t();
+</script>
+
+<h2>Analytics Video Heartbeat Demo</h2>
+
+<p>This page contains a simple JavaScript implementation of video heartbeat, as explained in <a href="http://microsite.omniture.com/t2/help/en_US/sc/appmeasurement/hbvideo/?f=video_js_players" target="_blank">Video Heartbeat JavaScript Players</a>.</p>
+
+<p>View the source of the current page to see the video tracking calls and the HTML 5 event handlers.</p>
+
+<p>View the <a href="script/AppMeasurement.js" target="_blank">AppMeasurement.js</a> source to view the video heartbeat configuration and the custom PlayerDelegate implementation.</p>
+
+<video id="movie" width="600" preload controls>
+    <source src="vid/fortune-teller-low.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+    <source src="vid/fortune-teller-low.webm" type='video/webm; codecs="vp8, vorbis"'>
+    <source src="vid/fortune-teller-low.ogv" type='video/ogg; codes="theora, vorbis"'>
+</video>
+
+<p>
+    More info. about media events in html5 players can be found at <a href="http://www.w3.org/2010/05/video/mediaevents.html">the w3c</a>
+</p>
+
+<script type="text/javascript">
+    var myvideo = document.getElementById('movie');
+    myvideo.addEventListener('play',trackPlay,false);
+    myvideo.addEventListener('ended',trackComplete,false);
+
+    function trackPlay() {
+        var myvideo = document.getElementById('movie');
+        if (myvideo.currentTime == 0) {
+            VideoHeartbeat.trackVideoLoad();
+            VideoHeartbeat.trackPlay();
+        } else {
+            VideoHeartbeat.trackPlay();
+        }
+    };
+
+    function trackComplete() {
+        VideoHeartbeat.trackComplete();
+        VideoHeartbeat.trackVideoUnload();
+    }
+
+</script>
+
+
+</body>
+</html>
